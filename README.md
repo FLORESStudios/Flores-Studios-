@@ -1,2 +1,1 @@
-# FLORES-Studios-
-Distribuidora Digital 
+# FLORES-Studios
