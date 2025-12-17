@@ -10,7 +10,7 @@ body{background:linear-gradient(180deg,#ffd4e5,#ffeef6)}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* ===== LUCES ===== */
-.lights{display:flex;justify-content:space-between;position:absolute;top:-8px;left:0;width:100%;padding:0 10px}
+.lights{display:flex;justify-content:space-between;position:absolute;top:-8px;left:0;width:100%;padding:0 10px;pointer-events:none}
 .bulb{width:14px;height:14px;border-radius:50%;animation:glow 1.5s infinite alternate}
 .bulb:nth-child(odd){animation-delay:.7s}
 @keyframes glow{from{opacity:.4}to{opacity:1;box-shadow:0 0 12px currentColor}}
@@ -22,7 +22,7 @@ body{background:linear-gradient(180deg,#ffd4e5,#ffeef6)}
 @keyframes fall{to{transform:translateY(110vh);opacity:0}}
 
 /* ===== BOTÓN ===== */
-.btn-christmas{background:linear-gradient(45deg,#c62828,#2e7d32);animation:pulse 1.4s infinite;color:#fff}
+.btn-main{background:linear-gradient(45deg,#ff4fa2,#ff80bf);animation:pulse 1.4s infinite;color:#fff}
 @keyframes pulse{50%{transform:scale(1.05)}}
 
 /* ===== FUEGOS ===== */
@@ -33,9 +33,6 @@ body{background:linear-gradient(180deg,#ffd4e5,#ffeef6)}
 .newyear-text{position:fixed;top:28%;left:50%;transform:translateX(-50%);font-size:90px;font-weight:900;letter-spacing:6px;color:transparent;display:flex;gap:10px;pointer-events:none;z-index:9997}
 .newyear-text span{animation:spark 1.6s infinite}
 @keyframes spark{to{text-shadow:0 0 20px gold,0 0 40px red}}
-
-/* ===== SAN VALENTÍN ===== */
-@keyframes floatUp{to{transform:translateY(-150px) scale(1.4);opacity:0}}
 
 /* ===== CUMPLEAÑOS ===== */
 .bday-text{position:fixed;top:30%;left:50%;transform:translateX(-50%);font-size:64px;font-weight:900;color:#ff5722;z-index:9997;animation:bounce 1.8s infinite;pointer-events:none}
@@ -48,15 +45,15 @@ body{background:linear-gradient(180deg,#ffd4e5,#ffeef6)}
 /* ===== BOTÓN MÚSICA ===== */
 .music-btn{position:fixed;bottom:90px;right:20px;background:#c62828;color:#fff;padding:10px 14px;border-radius:999px;font-size:14px;z-index:9999;box-shadow:0 4px 10px rgba(0,0,0,.3)}
 </style></head>
-<body class="text-gray-800"><div class="max-w-xl mx-auto p-6 mt-6 bg-white rounded-2xl shadow-xl border border-red-300 relative"><div class="lights">
+<body class="text-gray-800"><div class="max-w-xl mx-auto p-6 mt-6 bg-white rounded-2xl shadow-xl border border-pink-300 relative"><div class="lights">
 <div class="bulb" style="background:red;color:red"></div>
 <div class="bulb" style="background:gold;color:gold"></div>
 <div class="bulb" style="background:green;color:green"></div>
 <div class="bulb" style="background:blue;color:blue"></div>
 <div class="bulb" style="background:red;color:red"></div>
-</div><div id="banner" class="text-white text-center py-2 rounded-xl mb-4 font-semibold"></div><h2 class="text-3xl font-bold text-center text-pink-600 mb-4">Descargar Videos de TikTok</h2>
+</div><div id="banner" class="text-center py-2 rounded-xl mb-4 font-semibold"></div><h2 class="text-3xl font-bold text-center text-pink-600 mb-4">Descargar Videos de TikTok</h2>
 <p class="text-center text-gray-600 mb-6">Sin marca de agua | HD | 4K | MP3</p><input id="videoURL" class="w-full p-3 border-2 border-pink-400 rounded-xl" placeholder="Pega aquí el enlace de TikTok">
-<button onclick="processVideo()" class="w-full mt-4 p-3 rounded-xl font-semibold btn-christmas">🎁 Descargar</button><div id="loading" class="hidden mt-4"><div class="loader"></div></div><div id="previewContainer" class="hidden mt-6">
+<button id="downloadBtn" class="w-full mt-4 p-3 rounded-xl font-semibold btn-main">🎁 Descargar</button><div id="loading" class="hidden mt-4"><div class="loader"></div></div><div id="previewContainer" class="hidden mt-6">
 <video id="previewVideo" controls class="w-full rounded-xl"></video>
 <div class="grid gap-3 mt-4">
 <a id="downloadHD" target="_blank" class="bg-pink-500 text-white p-3 rounded-xl text-center">Descargar HD</a>
@@ -64,107 +61,95 @@ body{background:linear-gradient(180deg,#ffd4e5,#ffeef6)}
 <a id="downloadMP3" target="_blank" class="bg-pink-700 text-white p-3 rounded-xl text-center">Descargar MP3</a>
 </div></div></div><button id="musicBtn" class="music-btn">🔊 Activar sonido</button>
 
-<script>
-let audioUnlocked=false;
-let bgMusic=null;
-let fireSound=null;
-
+<footer class="max-w-xl mx-auto mt-10 mb-6 p-4 bg-white rounded-2xl shadow-xl border border-pink-300 text-center">
+<p class="mt-4 text-xs text-gray-500">© 2026 FLORES Studios. Todos los derechos reservados.</p>
+<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@floresstudios/video/7582554970243747093" data-video-id="7582554970243747093" style="max-width:100%;min-width:325px;">
+<section></section>
+</blockquote>
+<script async src="https://www.tiktok.com/embed.js"></script>
+</footer><script>
+/* ===== FECHA ===== */
 const today=new Date();
 const m=today.getMonth();
 const d=today.getDate();
 const banner=document.getElementById('banner');
 
-/* 🔊 BOTÓN MANUAL (OBLIGATORIO POR NAVEGADORES) */
+/* ===== AUDIO ===== */
+let audioUnlocked=false;
+let bgMusic=null;
+let fireSound=null;
+
 const musicBtn=document.getElementById('musicBtn');
 musicBtn.onclick=()=>{
   audioUnlocked=true;
   musicBtn.innerText='🎵 Sonido activado';
   musicBtn.style.background='green';
-
-  if(bgMusic){
-    bgMusic.currentTime=0;
-    bgMusic.play().catch(e=>console.log(e));
-  }
-
-  if(fireSound){
-    fireSound.currentTime=0;
-    fireSound.play().catch(()=>{});
-  }
+  if(bgMusic){bgMusic.currentTime=0;bgMusic.play().catch(()=>{})}
+  if(fireSound){fireSound.currentTime=0;fireSound.play().catch(()=>{})}
 };
 
 /* 🎄 NAVIDAD */
 if(m===11 && d<=25){
   banner.innerHTML='<span style="color:#ff4fa2">🎄 Feliz Navidad 2025 🎅</span>';
   bgMusic=new Audio('https://cdn.pixabay.com/download/audio/2022/12/07/audio_9f2f7b3a59.mp3');
-  bgMusic.loop=true;bgMusic.volume=.6;bgMusic.preload='auto';
-  if(audioUnlocked) bgMusic.play().catch(()=>{});
+  bgMusic.loop=true;bgMusic.volume=.6;
   for(let i=0;i<30;i++){const s=document.createElement('div');s.className='snowflake';s.innerText='❄';s.style.left=Math.random()*100+'vw';s.style.animationDuration=5+Math.random()*5+'s';document.body.appendChild(s)}
-}
 }
 
 /* 🎆 AÑO NUEVO */
 else if((m===11 && d===31)||(m===0 && d===1)){
   banner.innerHTML='🎆 Feliz Año Nuevo 🎆';
   document.querySelectorAll('.bulb').forEach(b=>b.classList.add('beat'));
-
   bgMusic=new Audio('https://cdn.pixabay.com/download/audio/2022/01/18/audio_3b0e1b5d1e.mp3');
-  bgMusic.loop=true;bgMusic.volume=.6;bgMusic.preload='auto';
-  if(audioUnlocked) bgMusic.play().catch(()=>{});
-
+  bgMusic.loop=true;bgMusic.volume=.6;
   fireSound=new Audio('https://cdn.pixabay.com/download/audio/2021/08/04/audio_062c1c6e27.mp3');
   fireSound.volume=.6;
-  if(audioUnlocked) fireSound.play().catch(()=>{});
-
   const ny=document.createElement('div');ny.className='newyear-text';document.body.appendChild(ny);
   '2026'.split('').forEach((c,i)=>{const s=document.createElement('span');s.innerText=c;s.style.animationDelay=i*.4+'s';ny.appendChild(s)});
-
   setInterval(()=>{const f=document.createElement('div');f.className='firework';f.style.left=Math.random()*100+'vw';f.style.top=Math.random()*100+'vh';f.style.background=`hsl(${Math.random()*360},100%,60%)`;document.body.appendChild(f);setTimeout(()=>f.remove(),1200)},450);
-(()=>{const f=document.createElement('div');f.className='firework';f.style.left=Math.random()*100+'vw';f.style.top=Math.random()*100+'vh';f.style.background=`hsl(${Math.random()*360},100%,60%)`;document.body.appendChild(f);setTimeout(()=>f.remove(),1200)},450);
 }
 
 /* 🎂 CUMPLEAÑOS */
 else if(m===0 && d===26){
   banner.innerHTML='🎂 Feliz Cumpleaños Yerson Humiri 🎉';
   bgMusic=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c6a1d1d0c.mp3');
-  bgMusic.volume=.7;bgMusic.preload='auto';
-  if(audioUnlocked) bgMusic.play().catch(()=>{});
+  bgMusic.volume=.7;
   const t=document.createElement('div');t.className='bday-text';t.innerText='YERSON HUMIRI';document.body.appendChild(t);
   for(let i=0;i<120;i++){const c=document.createElement('div');c.className='confetti';c.style.left=Math.random()*100+'vw';c.style.background=`hsl(${Math.random()*360},90%,60%)`;document.body.appendChild(c)}
-}('https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c6a1d1d0c.mp3').play().catch(()=>{});
 }
 
 /* 💖 SAN VALENTÍN */
 else if(m===1 && d===14){
   banner.innerHTML='💖 Feliz San Valentín 💖';
   bgMusic=new Audio('https://cdn.pixabay.com/download/audio/2022/02/14/audio_2a6b8d2e89.mp3');
-  bgMusic.loop=true;bgMusic.volume=.6;bgMusic.preload='auto';
-  if(audioUnlocked) bgMusic.play().catch(()=>{});
+  bgMusic.loop=true;bgMusic.volume=.6;
 }
-else banner.remove();
+
+/* ===== DESCARGA ===== */
+document.getElementById('downloadBtn').addEventListener('click',processVideo);
 
 async function processVideo(){
+  const url=document.getElementById('videoURL').value.trim();
+  if(!url||!url.includes('tiktok.com')) return alert('Pega un enlace válido de TikTok');
+
   if(m===0 && d===26){const g=document.createElement('div');g.className='gift';g.innerText='🎁';document.body.appendChild(g);setTimeout(()=>g.remove(),1600)}
   if(m===1 && d===14){for(let i=0;i<15;i++){const h=document.createElement('div');h.innerText='💖';h.style.position='fixed';h.style.left=Math.random()*innerWidth+'px';h.style.bottom='20px';h.style.animation='floatUp 3s ease-out forwards';document.body.appendChild(h);setTimeout(()=>h.remove(),3000)}}
 
-  const url=videoURL.value.trim();
-  if(!url||!url.includes('tiktok.com')) return alert('Pega un enlace válido de TikTok');
+  document.getElementById('loading').classList.remove('hidden');
+  document.getElementById('previewContainer').classList.add('hidden');
 
-  loading.classList.remove('hidden');previewContainer.classList.add('hidden');
   try{
     const r=await fetch(`https://corsproxy.io/?https://www.tikwm.com/api/?url=${encodeURIComponent(url)}&hd=1`);
-    const j=await r.json();if(j.code!==0) throw 'error';
-    previewVideo.src=j.data.play;
-    downloadHD.href=j.data.play;
-    download4K.href=j.data.hdplay||j.data.play;
-    downloadMP3.href=j.data.music||'#';
-    previewContainer.classList.remove('hidden');
+    const j=await r.json();
+    if(j.code!==0) throw 'error';
+    document.getElementById('previewVideo').src=j.data.play;
+    document.getElementById('downloadHD').href=j.data.play;
+    document.getElementById('download4K').href=j.data.hdplay||j.data.play;
+    document.getElementById('downloadMP3').href=j.data.music||'#';
+    document.getElementById('previewContainer').classList.remove('hidden');
   }catch(e){alert('No se pudo procesar el video')}
-  loading.classList.add('hidden');
+
+  document.getElementById('loading').classList.add('hidden');
 }
-</script><!-- TikTok embed debajo del copyright --><footer class="max-w-xl mx-auto mt-10 mb-6 p-4 bg-white rounded-2xl shadow-xl border border-red-300 text-center">
-  <p class="mt-4 text-xs text-gray-500">© 2026 FLORES Studios. Todos los derechos reservados.</p>  <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@floresstudios/video/7582554970243747093" data-video-id="7582554970243747093" style="max-width:100%;min-width:325px;">
-    <section></section>
-  </blockquote>
-  <script async src="https://www.tiktok.com/embed.js"></script>
-</footer></body>
+</script></body>
 </html>
