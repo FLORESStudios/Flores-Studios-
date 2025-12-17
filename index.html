@@ -59,7 +59,7 @@ body{background:linear-gradient(180deg,#ffd4e5,#ffeef6)}
 <a id="downloadHD" target="_blank" class="bg-pink-500 text-white p-3 rounded-xl text-center">Descargar HD</a>
 <a id="download4K" target="_blank" class="bg-pink-600 text-white p-3 rounded-xl text-center">Descargar 4K</a>
 <a id="downloadMP3" target="_blank" class="bg-pink-700 text-white p-3 rounded-xl text-center">Descargar MP3</a>
-</div></div></div><button id="musicBtn" class="music-btn">🔊 Activar sonido</button>
+</div></div></div><a href="https://wa.me/51956461177" target="_blank" class="music-btn" style="background:#25D366">💬 WhatsApp</a>
 
 <footer class="max-w-xl mx-auto mt-10 mb-6 p-4 bg-white rounded-2xl shadow-xl border border-pink-300 text-center">
 <p class="mt-4 text-xs text-gray-500">© 2026 FLORES Studios. Todos los derechos reservados.</p>
@@ -79,14 +79,8 @@ let audioUnlocked=false;
 let bgMusic=null;
 let fireSound=null;
 
-const musicBtn=document.getElementById('musicBtn');
-musicBtn.onclick=()=>{
-  audioUnlocked=true;
-  musicBtn.innerText='🎵 Sonido activado';
-  musicBtn.style.background='green';
-  if(bgMusic){bgMusic.currentTime=0;bgMusic.play().catch(()=>{})}
-  if(fireSound){fireSound.currentTime=0;fireSound.play().catch(()=>{})}
-};
+// Botón de WhatsApp (se elimina control manual de sonido)
+// El audio seguirá disponible solo si el navegador lo permite tras interacción
 
 /* 🎄 NAVIDAD */
 if(m===11 && d<=25){
