@@ -35,8 +35,49 @@ body { background: linear-gradient(180deg,#ffd4e5,#ffeef6); }
 .christmas-banner {
     background: linear-gradient(90deg,#c62828,#2e7d32);
 }
-</style></head><body class="text-gray-800"><div class="max-w-xl mx-auto p-6 mt-6 bg-white rounded-2xl shadow-xl border border-red-300">
-<div class="christmas-banner text-white text-center py-2 rounded-xl mb-4 font-semibold">🎄 Modo Navidad Activado 🎅</div>
+/* 🎄 LUCES NAVIDEÑAS */
+.lights {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: -8px;
+  left: 0;
+  width: 100%;
+  padding: 0 10px;
+}
+.bulb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  animation: glow 1.5s infinite alternate;
+}
+.bulb:nth-child(odd) { animation-delay: .7s; }
+@keyframes glow {
+  0% { opacity: .4; box-shadow: none; }
+  100% { opacity: 1; box-shadow: 0 0 8px currentColor; }
+}
+
+/* 🎁 BOTÓN NAVIDEÑO */
+.btn-christmas {
+  background: linear-gradient(45deg,#c62828,#2e7d32);
+  animation: pulse 1.4s infinite;
+}
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+</style></head><body class="text-gray-800"><div class="max-w-xl mx-auto p-6 mt-6 bg-white rounded-2xl shadow-xl border border-red-300 relative">
+<div class="lights">
+  <div class="bulb" style="background:red;color:red"></div>
+  <div class="bulb" style="background:gold;color:gold"></div>
+  <div class="bulb" style="background:green;color:green"></div>
+  <div class="bulb" style="background:blue;color:blue"></div>
+  <div class="bulb" style="background:red;color:red"></div>
+  <div class="bulb" style="background:gold;color:gold"></div>
+  <div class="bulb" style="background:green;color:green"></div>
+</div>
+<div class="christmas-banner text-white text-center py-2 rounded-xl mb-4 font-semibold">🎄 Feliz Navidad 2025 🎅</div>
 <h2 class="text-3xl font-bold text-center text-pink-600 mb-4">
 Descargar Videos de TikTok
 </h2>
@@ -48,7 +89,7 @@ type="text"
 placeholder="Pega aquí el enlace de TikTok">
 
 <button onclick="processVideo()"
-class="w-full mt-4 bg-pink-600 text-white p-3 rounded-xl font-semibold hover:bg-pink-700"> Descargar </button>
+class="w-full mt-4 text-white p-3 rounded-xl font-semibold btn-christmas"> 🎁 Descargar Video 🎄 </button>
 
 <div id="loading" class="hidden mt-4">
     <div class="loader"></div>
