@@ -80,42 +80,66 @@ musicBtn.onclick=()=>{
   audioUnlocked=true;
   musicBtn.innerText='🎵 Sonido activado';
   musicBtn.style.background='green';
-  if(bgMusic) bgMusic.play().catch(()=>{});
-  if(fireSound) fireSound.play().catch(()=>{});
+
+  if(bgMusic){
+    bgMusic.currentTime=0;
+    bgMusic.play().catch(e=>console.log(e));
+  }
+
+  if(fireSound){
+    fireSound.currentTime=0;
+    fireSound.play().catch(()=>{});
+  }
 };
 
 /* 🎄 NAVIDAD */
 if(m===11 && d<=25){
-  banner.innerHTML='🎄 Feliz Navidad 2025 🎅';
+  banner.innerHTML='<span style="color:#ff4fa2">🎄 Feliz Navidad 2025 🎅</span>';
   bgMusic=new Audio('https://cdn.pixabay.com/download/audio/2022/12/07/audio_9f2f7b3a59.mp3');
-  bgMusic.loop=true;bgMusic.volume=.5;
+  bgMusic.loop=true;bgMusic.volume=.6;bgMusic.preload='auto';
   if(audioUnlocked) bgMusic.play().catch(()=>{});
   for(let i=0;i<30;i++){const s=document.createElement('div');s.className='snowflake';s.innerText='❄';s.style.left=Math.random()*100+'vw';s.style.animationDuration=5+Math.random()*5+'s';document.body.appendChild(s)}
+}
 }
 
 /* 🎆 AÑO NUEVO */
 else if((m===11 && d===31)||(m===0 && d===1)){
   banner.innerHTML='🎆 Feliz Año Nuevo 🎆';
   document.querySelectorAll('.bulb').forEach(b=>b.classList.add('beat'));
+
+  bgMusic=new Audio('https://cdn.pixabay.com/download/audio/2022/01/18/audio_3b0e1b5d1e.mp3');
+  bgMusic.loop=true;bgMusic.volume=.6;bgMusic.preload='auto';
+  if(audioUnlocked) bgMusic.play().catch(()=>{});
+
   fireSound=new Audio('https://cdn.pixabay.com/download/audio/2021/08/04/audio_062c1c6e27.mp3');
-  fireSound.volume=.6;if(audioUnlocked) fireSound.play().catch(()=>{});
+  fireSound.volume=.6;
+  if(audioUnlocked) fireSound.play().catch(()=>{});
 
   const ny=document.createElement('div');ny.className='newyear-text';document.body.appendChild(ny);
   '2026'.split('').forEach((c,i)=>{const s=document.createElement('span');s.innerText=c;s.style.animationDelay=i*.4+'s';ny.appendChild(s)});
 
   setInterval(()=>{const f=document.createElement('div');f.className='firework';f.style.left=Math.random()*100+'vw';f.style.top=Math.random()*100+'vh';f.style.background=`hsl(${Math.random()*360},100%,60%)`;document.body.appendChild(f);setTimeout(()=>f.remove(),1200)},450);
+(()=>{const f=document.createElement('div');f.className='firework';f.style.left=Math.random()*100+'vw';f.style.top=Math.random()*100+'vh';f.style.background=`hsl(${Math.random()*360},100%,60%)`;document.body.appendChild(f);setTimeout(()=>f.remove(),1200)},450);
 }
 
 /* 🎂 CUMPLEAÑOS */
 else if(m===0 && d===26){
   banner.innerHTML='🎂 Feliz Cumpleaños Yerson Humiri 🎉';
+  bgMusic=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c6a1d1d0c.mp3');
+  bgMusic.volume=.7;bgMusic.preload='auto';
+  if(audioUnlocked) bgMusic.play().catch(()=>{});
   const t=document.createElement('div');t.className='bday-text';t.innerText='YERSON HUMIRI';document.body.appendChild(t);
   for(let i=0;i<120;i++){const c=document.createElement('div');c.className='confetti';c.style.left=Math.random()*100+'vw';c.style.background=`hsl(${Math.random()*360},90%,60%)`;document.body.appendChild(c)}
-  new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c6a1d1d0c.mp3').play().catch(()=>{});
+}('https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c6a1d1d0c.mp3').play().catch(()=>{});
 }
 
 /* 💖 SAN VALENTÍN */
-else if(m===1 && d===14){banner.innerHTML='💖 Feliz San Valentín 💖'}
+else if(m===1 && d===14){
+  banner.innerHTML='💖 Feliz San Valentín 💖';
+  bgMusic=new Audio('https://cdn.pixabay.com/download/audio/2022/02/14/audio_2a6b8d2e89.mp3');
+  bgMusic.loop=true;bgMusic.volume=.6;bgMusic.preload='auto';
+  if(audioUnlocked) bgMusic.play().catch(()=>{});
+}
 else banner.remove();
 
 async function processVideo(){
